@@ -1,0 +1,17 @@
+{
+	"name": "3_Event_Trigger_SalesFile_Pipeline",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/source/blobs/products",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/21f55184-646e-4816-8828-574c9a46f526/resourceGroups/B2-RG-CI/providers/Microsoft.Storage/storageAccounts/b2datalakeapril22",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

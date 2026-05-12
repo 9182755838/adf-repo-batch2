@@ -1,0 +1,28 @@
+{
+	"name": "purge_files_prop_8",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Datalake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_oldfilesname": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().p_oldfilesname",
+					"type": "Expression"
+				},
+				"folderPath": "raw data",
+				"fileSystem": "purge-old-files"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

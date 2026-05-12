@@ -1,0 +1,15 @@
+{
+	"name": "b2datafactoryapril22",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ca77b1c5-d10f-44e1-ac68-5df370c6f334",
+		"tenantId": "079890d6-6ee3-4646-8fdb-1acf8dd4c43a"
+	}
+}

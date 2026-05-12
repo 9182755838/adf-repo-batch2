@@ -1,0 +1,19 @@
+{
+	"name": "bulkcopy_dest_text_6",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Datalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "TablesCopy",
+				"fileSystem": "bulkcopy"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

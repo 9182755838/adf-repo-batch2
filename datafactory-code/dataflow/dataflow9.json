@@ -1,0 +1,60 @@
+{
+	"name": "dataflow9",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "9_scd1_table_prop",
+						"type": "DatasetReference"
+					},
+					"name": "source9"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "9_scd_dest_prop",
+						"type": "DatasetReference"
+					},
+					"name": "sink9"
+				}
+			],
+			"transformations": [
+				{
+					"name": "alterRow9"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Employee_ID as integer,",
+				"          First_Name as string,",
+				"          Salary as integer,",
+				"          Location as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table',",
+				"     partitionBy('hash', 1)) ~> source9",
+				"source9 alterRow(upsertIf(1==1),",
+				"     partitionBy('hash', 1)) ~> alterRow9",
+				"alterRow9 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Employee_ID,",
+				"          First_Name,",
+				"          Salary,",
+				"          Location",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink9"
+			]
+		}
+	}
+}

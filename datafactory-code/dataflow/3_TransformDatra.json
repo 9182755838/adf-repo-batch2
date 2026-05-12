@@ -1,0 +1,78 @@
+{
+	"name": "3_TransformDatra",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "3_Source_Prop",
+						"type": "DatasetReference"
+					},
+					"name": "sourcesalesfiles3"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "3_TargetBusiness_Data_Pfrop",
+						"type": "DatasetReference"
+					},
+					"name": "sinkReporting3"
+				}
+			],
+			"transformations": [
+				{
+					"name": "wherefilter3"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "statussplit1"
+				},
+				{
+					"name": "aggregation3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          InvoiceID as short,",
+				"          CustomerName as string,",
+				"          Product as string,",
+				"          Quantity as short,",
+				"          UnitPrice as integer,",
+				"          TotalAmount as integer,",
+				"          InvoiceDate as date,",
+				"          Status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourcesalesfiles3",
+				"sourcesalesfiles3 filter(InvoiceID!=106) ~> wherefilter3",
+				"wherefilter3 select(mapColumn(",
+				"          InvoiceID,",
+				"          Quantity,",
+				"          UnitPrice,",
+				"          TotalAmount,",
+				"          InvoiceDate,",
+				"          Status",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 split(Status=='Paid',",
+				"     Status=='Cancelled',",
+				"     disjoint: false) ~> statussplit1@(Refrigerator, Miceowave, others)",
+				"statussplit1@Refrigerator aggregate(groupBy(InvoiceID),",
+				"     UnitPrice = sum(UnitPrice)) ~> aggregation3",
+				"aggregation3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkReporting3"
+			]
+		}
+	}
+}

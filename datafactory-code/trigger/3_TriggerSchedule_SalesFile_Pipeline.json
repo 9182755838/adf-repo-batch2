@@ -1,0 +1,25 @@
+{
+	"name": "3_TriggerSchedule_SalesFile_Pipeline",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "3_ADE_Pipeline_SalesonlyFile",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2026-05-01T07:40:00",
+				"endTime": "2026-05-02T15:35:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
